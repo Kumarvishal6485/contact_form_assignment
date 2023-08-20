@@ -1,78 +1,78 @@
 <?php
-    include_once 'db/db.php';
-    if(isset($_POST['submit'])){
-        $name = $_POST['name'];
-        $phone = $_POST['phone'];
-        $email = $_POST['email'];
-        $subject = $_POST['subject'];
-        $message = $_POST['message'];
+    include_once 'db/db.php';                // including the database connection file
+    if(isset($_POST['submit'])){             //submit button is clicked by the user
+        $name = $_POST['name'];              //fetching the name entered by the user  
+        $phone = $_POST['phone'];            //fetching the phone number entered by the user
+        $email = $_POST['email'];            //fetching the email entered by the user
+        $subject = $_POST['subject'];        //fetching the subject entered by the user
+        $message = $_POST['message'];        //fetching the message entered by the user
     
-        if($name == ''){
+        if($name == ''){                      //name required validation
             $name_empty = true;
         }
 
-        if($phone == ''){
+        if($phone == ''){                     //phone number required validation
             $phone_empty = true;
         }
 
-        if($email == ''){
+        if($email == ''){                    //email required validation
             $phone_empty = true;
         }
 
-        if($subject == ''){
+        if($subject == ''){                  //subject required validation
             $subject_empty = true;
         }
 
-        if($message == ''){
+        if($message == ''){                 //message required validation
             $message_empty = true;
         }
 
-        if(preg_match('/[a-zA-Z ]{1,}/',$name) and !isset($name_empty)){
+        if(preg_match('/[a-zA-Z ]{1,}/',$name) and !isset($name_empty)){        //checking name valid or not
             $is_name = true;
         }
         else{
             $is_name = false;
         }
 
-        if(preg_match('/[0-9]{1,10}/',$phone) and !isset($phone_empty) ){
+        if(preg_match('/[0-9]{1,10}/',$phone) and !isset($phone_empty) ){        //checking phone valid or not
             $is_phone = true;
         }
         else{
             $is_phone = false;
         }
 
-        if(preg_match('/[a-zA-Z0-9]{1,}[@]{1}[a-z]{2,5}[\.]{1}[a-z]{2,3}/',$email) and !isset($email_empty) ){
+        if(preg_match('/[a-zA-Z0-9]{1,}[@]{1}[a-z]{2,5}[\.]{1}[a-z]{2,3}/',$email) and !isset($email_empty) ){    //checking email valid or not
             $is_email = true;
         }
         else{
             $is_email = false;
         }
 
-        if(preg_match('/[a-zA-Z0-9]{1,}/',$subject) and !isset($subject_empty) ){
+        if(preg_match('/[a-zA-Z0-9]{1,}/',$subject) and !isset($subject_empty) ){         //checking subject valid or not
             $is_subject = true;
         }
         else{
             $is_subject = false;
         }
 
-        if(preg_match('/[a-zA-Z0-9]{1,}/',$message) and !isset($message_empty)){
+        if(preg_match('/[a-zA-Z0-9]{1,}/',$message) and !isset($message_empty)){         //checking message valid or not
             $is_message = true;
         }
         else{
             $is_message = false;
         }
 
-        if($is_name and $is_email and $is_phone and $is_subject and $is_message){
-            $ip = $_SERVER['REMOTE_ADDR'];
-            $query = "insert into contact_form ( name , phone , email , subject , message , ip) values('$name' , '$phone' , '$email' , '$subject' , '$message' , '$ip')";
-            db($query);
+        if($is_name and $is_email and $is_phone and $is_subject and $is_message){            //all the input fields are valid 
+            $ip = $_SERVER['REMOTE_ADDR'];                                                   // getting the IP address
+            $query = "insert into contact_form ( name , phone , email , subject , message , ip) values('$name' , '$phone' , '$email' , '$subject' , '$message' , '$ip')";         //query to insert all fields in db
+            db($query);                         // query sent to db method that's created in db/db.php
         }
     }
 
-    if(isset($name)){
+    if(isset($name)){                //checking whether form submitted or not (as if it is submitted , we have assigned true to name and reused $name variable)
         if($name){
-            unset($_POST);
-            header("Location: ".$_SERVER['PHP_SELF']);
+            unset($_POST);            //destroy all the fields variables
+            header("Location: ".$_SERVER['PHP_SELF']);        //redirect to same page 
         }
     }
 ?>
