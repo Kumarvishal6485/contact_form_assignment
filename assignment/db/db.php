@@ -1,6 +1,6 @@
 <?php 
     function db($query){
-        $conn = mysqli_connect('localhost','root','','assignment'); // connection with database
+        $conn = mysqli_connect('localhost','root','','assignment') or die("Can\'t Establish Connection"); // connection with database
         if($conn){                                                  // if connection created succesfully
             $res = mysqli_query($conn,$query);                      // execute the query
             if($res){
